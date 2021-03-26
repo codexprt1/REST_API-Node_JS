@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
+// const auth = require("./helper/auth");
 
 app.use(cors());
 app.options("*", cors()); // allowing every request to pass any origin
@@ -20,6 +21,7 @@ const ordersRouter = require("./routers/order");
 app.use(express.json()); //Used to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
 app.use(morgan("tiny")); //display the log request in specific format
+// app.use(auth());
 
 app.use("/api/v1/products", productsRouter);
 app.use("/api/v1/categories", categoriesRouter);
@@ -30,6 +32,7 @@ mongoose
   .connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then(() => {
     console.log("<Database Paired /> ");
